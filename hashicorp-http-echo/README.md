@@ -1,9 +1,9 @@
 # K3s Path-Based Ingress Routing Demo
 
-A hands-on Kubernetes learning project: two simple web apps (`app1`, `app2`) deployed on a **k3s** cluster and exposed through **path-based routing** using the **NGINX Ingress Controller**, running alongside k3s's default **Traefik** controller.
+A hands-on Kubernetes learning project: two simple web apps (`app-01`, `app-02`) deployed on a **k3s** cluster and exposed through **path-based routing** using the **NGINX Ingress Controller**, running alongside k3s's default **Traefik** controller.
 
-- `http://<K3S_SERVER_IP>:30080/app1` → `hello world my name APP-01`
-- `http://<K3S_SERVER_IP>:30080/app2` → `hello world my name APP-02`
+- `http://<K3S_SERVER_IP>:30080/app-01` → `hello world my name APP-01`
+- `http://<K3S_SERVER_IP>:30080/app-02` → `hello world my name APP-02`
 
 ## Overview
 
