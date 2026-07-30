@@ -1,0 +1,28 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: apps-ingress
+  namespace: app
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - http:
+        paths:
+          - path: /app-01(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: app-01-svc   # <-- replace if `kubectl get svc -n app` shows a different name
+                port:
+                  number: 80
+          - path: /app-02(/|$)(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: app-02-svc   # <-- replace if `kubectl get svc -n app` shows a different name 
+                port:
+                  number: 80
