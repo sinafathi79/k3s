@@ -1,0 +1,22 @@
+ApiVersion: v1
+kina: Deployment
+metadata:
+  name: 2048-app
+  namespace: 2048
+  labels:
+    app: 2048-app
+spec:
+  replica: 3
+  selector:
+    matchLabels:
+      app: 2048-app
+  template:
+    metadata:
+      labels:
+      app: 2048-app
+    spec:
+      containers:
+        - name: 2048-app 
+          image: sinafathi/2048-game:0.1 
+          ports:
+            containerPort: 5000
