@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: game-2048
+  namespace: game-2048
+  annotations:
+    nginx.org/ssl-redirect: "true"   
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - 2048.local          
+      secretName: game-2048-tls
+  rules:
+    - host: 2048.local      
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: game-2048
+                port:
+                  number: 80
