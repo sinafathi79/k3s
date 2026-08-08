@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: game-2048 
-          image: sinafathi/game-2048:0.1 
+          image: game-2048:latest
           imagePullPolicy: Never   # <--- local image imported via `k3s ctr images import'
           ports:
             - containerPort: 5000    # <-- change this if your Dockerfile EXPOSEs a different port
