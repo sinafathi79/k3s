@@ -1,4 +1,0 @@
-ApiVersion: v1
-kind: Namespace
-matedata:
-  name: 2048
