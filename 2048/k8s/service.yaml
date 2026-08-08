@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: game-2048
+  namespace: game-2048
+  labels:
+    app: game
+spec:
+  type: ClusterIP
+  selector:
+    app: game-2048
+  ports:
+    - name: http
+      port: 80            # ← clients (Ingress, other pods) connect to this port
+      targetPort: 5000    # ← MUST be the port the container is actually listening on
