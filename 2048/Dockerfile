@@ -1,7 +1,9 @@
-FROM alpine:latest
-RUN apk add --update --no-cache python3 && ln -sf python3 /usr/bin/python
+FROM alpine:3.24
+RUN apk add --update --no-cache python3
 WORKDIR /app
-COPY . /app
+COPY . .
+RUN adduser -D -u 1000 appuser && chown -R appuser /app
+USER appuser
 EXPOSE 5000
 ENTRYPOINT ["python3"]
-CMD ["-m","http.server","5000" ]
+CMD ["-m","http.server","5000"]
