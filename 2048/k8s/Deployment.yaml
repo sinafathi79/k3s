@@ -1,22 +1,43 @@
-ApiVersion: v1
-kina: Deployment
+apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: 2048-app
-  namespace: 2048
+  name: game-2048
+  namespace: game-2048
   labels:
-    app: 2048-app
+    app: game-2048
 spec:
-  replica: 3
-  selector:
+  replicas: 3
+  selector: 
     matchLabels:
-      app: 2048-app
+      app: game-2048
   template:
     metadata:
       labels:
-      app: 2048-app
+        app: game-2048
     spec:
       containers:
-        - name: 2048-app 
-          image: sinafathi/2048-game:0.1 
+        - name: game-2048 
+          image: sinafathi/game-2048:0.1 
+          imagePullPolicy: Never   # <--- local image imported via `k3s ctr images import'
           ports:
-            containerPort: 5000
+            - containerPort: 5000    # <-- change this if your Dockerfile EXPOSEs a different port
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              cpu: 200m
+              memory: 256Mi
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 5000    # <-- change this if your Dockerfile EXPOSEs a different port  NOT 80
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 5000    # <-- change this if your Dockerfile EXPOSEs a different port NOT 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
+
