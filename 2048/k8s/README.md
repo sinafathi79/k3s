@@ -134,3 +134,33 @@ Usually caused by a container-port mismatch failing the readiness probe.
 **Ingress has no address / 404** — confirm `kubectl get ingressclasses` shows `nginx`, and that `ingressClassName: nginx` in `ingress.yaml` matches.
 
 **Cert warnings in browser** — expected with a self-signed cert; click through, or add `tls.crt` to your OS/browser trust store if you want to remove the warning.
+
+## Cleanup
+
+Remove just the app (leaves the ingress controller running, e.g. if you're hosting other services on it):
+
+```bash
+kubectl delete namespace game-2048
+```
+
+This deletes the namespace and everything in it — Deployment, Service, Ingress, and the `game-2048-tls` secret — in one shot.
+
+Remove the NGINX Ingress Controller too, if you're tearing down the whole setup:
+
+```bash
+helm uninstall nginx-ingress -n nginx-ingress
+kubectl delete namespace nginx-ingress
+```
+
+Remove local build artifacts (cert/key and the saved image tarball):
+
+```bash
+rm -f game-2048.tar tls.crt tls.key
+```
+
+Remove the imported image from K3s's containerd store (check the exact reference first, since `ctr` needs the full name):
+
+```bash
+sudo k3s ctr images ls | grep game-2048
+sudo k3s ctr images rm docker.io/library/game-2048:latest
+```
